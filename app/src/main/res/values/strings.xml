@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FanBase</string>
+    <string name="title_activity_tailgate_maps">Map</string>
 </resources>
