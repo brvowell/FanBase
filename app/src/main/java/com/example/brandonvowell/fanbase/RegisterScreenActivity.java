@@ -3,7 +3,7 @@ package com.example.brandonvowell.fanbase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class RegisterScreen extends AppCompatActivity {
+public class RegisterScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
