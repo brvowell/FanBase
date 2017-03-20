@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "332800282964",
+    "firebase_url": "https://fanbase-88ddd.firebaseio.com",
+    "project_id": "fanbase-88ddd",
+    "storage_bucket": "fanbase-88ddd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332800282964:android:d996c20902925c30",
+        "android_client_info": {
+          "package_name": "com.example.brandonvowell.fanbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332800282964-b4nanppdp6top9fivh4qpu53dlnpkoq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTB9dQ1fvlQNTndTW1Qy7_4fqVpuEpGRk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
