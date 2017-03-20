@@ -36,7 +36,12 @@
 
         <activity
             android:name=".TailgateMaps"
-            android:label="@string/title_activity_tailgate_maps"></activity>
+            android:label="@string/title_activity_tailgate_maps">
+        </activity>
+        <activity
+            android:name="com.example.brandonvowell.fanbase.RegisterScreen"
+            android:label="Register"
+            />
     </application>
 
 </manifest>

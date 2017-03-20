@@ -7,4 +7,8 @@
     <string name="register_button_text">Register</string>
     <string name="email_textbox_hint">Email Address</string>
     <string name="password_textbox_hint">Password</string>
+    <string name="firstname_textbox_hint">First Name</string>
+    <string name="lastname_textbox_hint">Last Name</string>
+    <string name="confirmpass_textbox_hint">Confirm Password</string>
+    <string name="createaccount_button_text">Create Account</string>
 </resources>
