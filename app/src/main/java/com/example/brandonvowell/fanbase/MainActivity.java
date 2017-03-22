@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         //TODO
         //If user is authenticated, start menu activity.
         //If user is not authenticated, start login activity.
