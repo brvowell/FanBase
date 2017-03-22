@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Intent nextScreen = new Intent(this, LoginScreenActivity.class);
-            startActivityForResult(nextScreen, 0);
+            transitionLoginScreenActivity();
         }
     }
 
