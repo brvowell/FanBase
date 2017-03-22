@@ -7,22 +7,11 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:id="@+id/editText6"
-        android:hint="@string/firstname_textbox_hint" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:layout_marginTop="19dp"
-        android:id="@+id/editText7"
-        android:layout_below="@+id/editText6"
-        android:layout_alignLeft="@+id/editText6"
-        android:layout_alignStart="@+id/editText6"
+        android:id="@+id/lastname_text_field"
+        android:layout_below="@+id/firstname_text_field"
+        android:layout_alignLeft="@+id/firstname_text_field"
+        android:layout_alignStart="@+id/firstname_text_field"
         android:hint="@string/lastname_textbox_hint" />
 
     <EditText
@@ -30,11 +19,11 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/editText8"
-        android:layout_alignLeft="@+id/editText8"
-        android:layout_alignStart="@+id/editText8"
+        android:layout_below="@+id/email_reg_textfield"
+        android:layout_alignLeft="@+id/email_reg_textfield"
+        android:layout_alignStart="@+id/email_reg_textfield"
         android:layout_marginTop="26dp"
-        android:id="@+id/editText10"
+        android:id="@+id/password_reg_textfield"
         android:hint="@string/password_textbox_hint" />
 
     <EditText
@@ -42,12 +31,21 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/editText10"
-        android:layout_alignRight="@+id/editText10"
-        android:layout_alignEnd="@+id/editText10"
+        android:layout_below="@+id/password_reg_textfield"
+        android:layout_alignRight="@+id/password_reg_textfield"
+        android:layout_alignEnd="@+id/password_reg_textfield"
         android:layout_marginTop="20dp"
-        android:id="@+id/editText11"
+        android:id="@+id/passwordconfirm_text_field"
         android:hint="@string/confirmpass_textbox_hint" />
+
+    <Button
+        android:text="@string/createaccount_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:id="@+id/create_account_button"
+        android:layout_below="@+id/passwordconfirm_text_field"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -55,19 +53,21 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_marginTop="20dp"
-        android:id="@+id/editText8"
-        android:layout_below="@+id/editText7"
-        android:layout_alignLeft="@+id/editText7"
-        android:layout_alignStart="@+id/editText7"
-        android:hint="@string/email_textbox_hint" />
+        android:id="@+id/email_reg_textfield"
+        android:hint="@string/email_textbox_hint"
+        android:layout_below="@+id/lastname_text_field"
+        android:layout_alignLeft="@+id/lastname_text_field"
+        android:layout_alignStart="@+id/lastname_text_field" />
 
-    <Button
-        android:text="@string/createaccount_button_text"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
-        android:id="@+id/button3"
-        android:layout_below="@+id/editText11"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="35dp"
+        android:id="@+id/firstname_text_field"
+        android:hint="@string/firstname_textbox_hint"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
