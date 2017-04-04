@@ -35,15 +35,27 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".TailgateMaps"
-            android:label="@string/title_activity_tailgate_maps">
-        </activity>
-        <activity
             android:name="com.example.brandonvowell.fanbase.RegisterScreenActivity"
             android:label="@string/register_button_text"
             />
         <activity
             android:name="com.example.brandonvowell.fanbase.LoginScreenActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="com.example.brandonvowell.fanbase.SettingsActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="com.example.brandonvowell.fanbase.TailgateInfoActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="com.example.brandonvowell.fanbase.TailgateMapActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="com.example.brandonvowell.fanbase.TailgateHistoryActivity"
             android:label="@string/app_name"
             />
     </application>
