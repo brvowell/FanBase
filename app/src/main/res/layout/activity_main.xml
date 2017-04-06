@@ -1,5 +1,3 @@
-
-
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/themeSilver"
     tools:context="com.example.brandonvowell.fanbase.MainActivity">
 
     <Button
@@ -31,7 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:height="80dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="30dp"
+        />
 
     <Button
         android:text="@string/browse_tailgates_btn_text"
@@ -44,7 +44,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:height="80dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="30dp"/>
 
     <Button
         android:text="@string/settings_btn_text"
@@ -56,7 +56,8 @@
         android:layout_below="@+id/btnHistory"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:height="80dp"/>
+        android:height="80dp"
+        android:layout_marginBottom="30dp"/>
 
     <Button
         android:text="@string/tailgate_history_btn_text"
@@ -69,5 +70,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:height="80dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="30dp"/>
 </RelativeLayout>
