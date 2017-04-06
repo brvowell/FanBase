@@ -16,4 +16,5 @@
     <string name="browse_tailgates_btn_text">Browse Nearby Tailgates</string>
     <string name="settings_btn_text">Settings</string>
     <string name="tailgate_history_btn_text">View My Tailgates</string>
+    <string name="set_location_prompt">Make sure that you are at the physical location of your tailgate before you set the tailgate location. Would you like to set the tailgate location now?</string>
 </resources>
