@@ -12,4 +12,8 @@
     <string name="confirmpass_textbox_hint">Confirm Password</string>
     <string name="createaccount_button_text">Create Account</string>
     <string name="auth_failed">Login failed - email address or password is incorrect.</string>
+    <string name="create_tailgate_btn_text">Create a Tailgate</string>
+    <string name="browse_tailgates_btn_text">Browse Nearby Tailgates</string>
+    <string name="settings_btn_text">Settings</string>
+    <string name="tailgate_history_btn_text">View My Tailgates</string>
 </resources>
