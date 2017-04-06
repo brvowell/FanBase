@@ -20,11 +20,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-
 import im.delight.android.location.SimpleLocation;
 
 public class TailgateInfoActivity extends AppCompatActivity {
@@ -42,18 +37,17 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private Button btnSetLocation;
     private Button btnCreateTailgate;
 
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLocation;
-    private LocationManager locationManager;
-    private LocationRequest mLocationRequest;
-
     private SimpleLocation location;
-
-    private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
-    private long FASTEST_INTERVAL = 2000;
 
     private double latitude;
     private double longitude;
+    private String tailgateName;
+    private String tailgateDescription;
+    private String tailgateThingsToBring;
+    private String startTime;
+    private String endTime;
+    private int tailgateIsPublic;
+    private int tailgateIsHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,29 +110,67 @@ public class TailgateInfoActivity extends AppCompatActivity {
     }
 
     private void getCurrentDeviceLocation() {
-        //startLocationUpdates();
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
-        System.out.print(latitude);
-        System.out.print(longitude);
     }
 
     private void createTailgatePressed() {
+        if (verifyUserInput()) {
+            //Create tailgate object and push to firebase
+        }
+        else {
+            Toast.makeText(TailgateInfoActivity.this, R.string.tailgate_creation_failed,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private Boolean verifyUserInput() {
+        //returns true if user correctly supplied all necessary tailgate info, else false
+        this.tailgateName = nameTextField.getText().toString();
+        this.tailgateDescription = descriptionTextField.getText().toString();
+        this.tailgateThingsToBring = thingsToBringTextField.getText().toString();
+        this.startTime = startTimeTextField.getText().toString();
+        this.endTime = endTimeTextField.getText().toString();
+        this.tailgateIsHome = getTailgateHomeStatus();
+        this.tailgateIsPublic = getTailgatePrivacyStatus();
+
+        if (tailgateName.isEmpty() || tailgateDescription.isEmpty() || tailgateThingsToBring.isEmpty() ||
+                startTime.isEmpty() || endTime.isEmpty() || tailgateIsHome == -1 || tailgateIsPublic == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    private int getTailgateHomeStatus() {
+        //returns 1 if home, 0 if away, -1 if neither
+        if (homeRadioBtn.isChecked()) {
+            return 1;
+        } else if (awayRadioBtn.isChecked()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    private int getTailgatePrivacyStatus() {
+        //returns 1 if public, 0 if private, -1 if neither
+        if (publicRadioBtn.isChecked()) {
+            return 1;
+        } else if (privateRadioBtn.isChecked()) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-//        mGoogleApiClient.connect();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        if (mGoogleApiClient.isConnected()) {
-//            mGoogleApiClient.disconnect();
-//        }
     }
 
     @Override
@@ -152,67 +184,4 @@ public class TailgateInfoActivity extends AppCompatActivity {
         location.endUpdates();
         super.onPause();
     }
-
-    //GPS METHODS BELOW
-//    @Override
-//    public void onConnected(Bundle bundle) {
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        } startLocationUpdates();
-//        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if(mLocation == null){
-//            startLocationUpdates();
-//        }
-//        if (mLocation != null) {
-//            double latitude = mLocation.getLatitude();
-//            double longitude = mLocation.getLongitude();
-//        } else {
-//            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    protected void startLocationUpdates() {
-//        // Create the location request
-//        mLocationRequest = LocationRequest.create()
-//                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(UPDATE_INTERVAL)
-//                .setFastestInterval(FASTEST_INTERVAL);
-//        // Request location updates
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-//                mLocationRequest, this);
-//        Log.d("reque", "--->>>>");
-//    }
-//
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//        Log.i(TAG, "Connection Suspended");
-//        mGoogleApiClient.connect();
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(ConnectionResult connectionResult) {
-//        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
-//    }
-//
-//    @Override
-//    public void onLocationChanged(Location location) {
-//
-//    }
 }
