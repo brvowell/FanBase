@@ -65,13 +65,14 @@
         android:id="@+id/firstname_text_field"
         android:hint="@string/firstname_textbox_hint"
         android:layout_above="@+id/lastname_text_field"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:text="Registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/titleReg"
         android:textAlignment="center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
