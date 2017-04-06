@@ -1,6 +1,10 @@
 <resources>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light"> </style>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@color/themeOrange</item>
+        <item name="colorControlActivated">@color/themeOrange</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
 
     <!-- Application theme. -->
    <!-- <style name="AppTheme" parent="AppBaseTheme">
