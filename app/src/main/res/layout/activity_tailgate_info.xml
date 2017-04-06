@@ -12,7 +12,8 @@
         android:ems="10"
         android:id="@+id/nameTextField"
         android:textAlignment="center"
-        android:hint="Tailgate Name" />
+        android:hint="Tailgate Name"
+        android:textColorHint="@color/themeBlack"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
         android:ems="10"
         android:id="@+id/descriptionTextField"
         android:layout_weight="0.10"
-        android:hint="Description" />
+        android:hint="Description"
+        android:textColorHint="@color/themeBlack"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -30,7 +32,8 @@
         android:ems="10"
         android:id="@+id/thingsToBringTextView"
         android:layout_weight="0.11"
-        android:hint="Things to Bring" />
+        android:hint="Things to Bring"
+        android:textColorHint="@color/themeBlack"/>
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -79,7 +82,8 @@
         android:inputType="time"
         android:ems="10"
         android:id="@+id/startTimeTextField"
-        android:hint="Start Time" />
+        android:hint="Start Time"
+        android:textColorHint="@color/themeBlack"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -87,7 +91,8 @@
         android:inputType="time"
         android:ems="10"
         android:id="@+id/endTimeTextField"
-        android:hint="End Time" />
+        android:hint="End Time"
+        android:textColorHint="@color/themeBlack"/>
 
     <Button
         android:text="Set Tailgate Location"
