@@ -1,10 +1,10 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light"> </style>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light"> </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+   <!-- <style name="AppTheme" parent="AppBaseTheme">
+        All customizations that are NOT specific to a particular API-level can go here.
         <item name="android:textColor">@color/themeBlack</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:colorBackground">@color/themeSilver</item>
@@ -26,7 +26,7 @@
         <item name="android:textSize">22dp</item>
         <item name="android:background">@color/themeBlack</item>
         <item name="android:padding">10dp</item>
-    </style>
+    </style> -->
 
 
 </resources>
