@@ -20,6 +20,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import im.delight.android.location.SimpleLocation;
 
 public class TailgateInfoActivity extends AppCompatActivity {
@@ -38,6 +41,7 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private Button btnCreateTailgate;
 
     private SimpleLocation location;
+    DatabaseReference database;
 
     private double latitude;
     private double longitude;
@@ -66,6 +70,8 @@ public class TailgateInfoActivity extends AppCompatActivity {
         btnCreateTailgate = (Button) findViewById(R.id.btnCreateTailgate);
 
         location = new SimpleLocation(this);
+        database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
+
         if (!location.hasLocationEnabled()) {
             // ask the user to enable location access
             SimpleLocation.openSettings(this);
@@ -117,6 +123,12 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private void createTailgatePressed() {
         if (verifyUserInput()) {
             //Create tailgate object and push to firebase
+            Tailgate newTailgate = new Tailgate(latitude, longitude, tailgateName, tailgateDescription,
+                    tailgateThingsToBring, startTime, endTime, tailgateIsPublic, tailgateIsHome);
+            DatabaseReference newRef = database.push();
+            newRef.setValue(newTailgate);
+
+
         }
         else {
             Toast.makeText(TailgateInfoActivity.this, R.string.tailgate_creation_failed,
