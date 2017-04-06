@@ -12,7 +12,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="FanBase"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -40,7 +40,7 @@
             />
         <activity
             android:name="com.example.brandonvowell.fanbase.LoginScreenActivity"
-            android:label="@string/app_name"
+            android:label="Login"
             />
         <activity
             android:name="com.example.brandonvowell.fanbase.SettingsActivity"
