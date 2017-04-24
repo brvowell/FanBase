@@ -184,16 +184,4 @@ public class TailgateInfoActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        location.beginUpdates();
-    }
-
-    @Override
-    protected void onPause() {
-        location.endUpdates();
-        super.onPause();
-    }
 }

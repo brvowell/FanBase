@@ -1,5 +1,9 @@
 package com.example.brandonvowell.fanbase;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.lang.Math;
+
 public class Tailgate {
     public double latitude;
     public double longitude;
@@ -8,8 +12,8 @@ public class Tailgate {
     public String tailgateThingsToBring;
     public String startTime;
     public String endTime;
-    public int tailgateIsPublic;
-    public int tailgateIsHome;
+    public long tailgateIsPublic;
+    public long tailgateIsHome;
 
     public Tailgate(double latitude, double longitude, String name, String description, String thingsToBring,
                     String startTime, String endTime, int isPublic, int isHome) {
@@ -22,5 +26,17 @@ public class Tailgate {
         this.endTime = endTime;
         this.tailgateIsPublic = isPublic;
         this.tailgateIsHome = isHome;
+    }
+
+    public Tailgate(HashMap<String, Object> map) {
+        this.latitude = (double) map.get("latitude");
+        this.longitude = (double) map.get("longitude");
+        this.tailgateName = (String) map.get("tailgateName");
+        this.tailgateDescription = (String) map.get("tailgateDescription");
+        this.tailgateThingsToBring = (String) map.get("tailgateThingsToBring");
+        this.startTime = (String) map.get("startTime");
+        this.endTime = (String) map.get("endTime");
+        this.tailgateIsPublic = (long) map.get("tailgateIsPublic");
+        this.tailgateIsHome = (long) map.get("tailgateIsHome");
     }
 }
