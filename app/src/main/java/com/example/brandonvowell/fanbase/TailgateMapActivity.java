@@ -11,6 +11,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -28,7 +30,8 @@ import java.util.Map;
 import im.delight.android.location.SimpleLocation;
 
 
-public class TailgateMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class TailgateMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
 
@@ -112,6 +115,8 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
         getCurrentDeviceLocation();
         LatLng myLocation = new LatLng(this.latitude, this.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 17.0f));
+        mMap.setOnMapClickListener(this);
+
     }
 
     private void getCurrentDeviceLocation() {
@@ -122,8 +127,14 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
     private void populateMap() {
         for (Tailgate tailgate : tailgateList) {
             LatLng pinLocation = new LatLng(tailgate.latitude, tailgate.longitude);
+            BitmapDescriptor pinColor;
+            if (tailgate.tailgateIsHome == 1) {
+                pinColor = BitmapDescriptorFactory.defaultMarker(12.00f);
+            } else {
+                pinColor = BitmapDescriptorFactory.defaultMarker(231.00f);
+            }
             mMap.addMarker(new MarkerOptions()
-                .position(pinLocation).title(tailgate.startTime)).setTag(tailgate);
+                .position(pinLocation).title(tailgate.startTime).icon(pinColor)).setTag(tailgate);
             mMap.setOnMarkerClickListener(this);
         }
     }
@@ -132,9 +143,6 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
     public boolean onMarkerClick(final Marker marker) {
         Tailgate clickedTailgate = (Tailgate) marker.getTag();
         String tailgateName = clickedTailgate.tailgateName;
-//        Toast.makeText(TailgateMapActivity.this,
-//                tailgateName,
-//                Toast.LENGTH_SHORT).show();
         if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
@@ -142,6 +150,14 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
             mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
         return false;
+    }
+
+    @Override
+    public void onMapClick (LatLng point) {
+        if (mBottomSheetBehavior1.getState() != 5) {
+            mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
     }
 
     @Override
