@@ -1,17 +1,42 @@
 package com.example.brandonvowell.fanbase;
 
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-public class TailgateMapActivity extends FragmentActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import im.delight.android.location.SimpleLocation;
+
+
+public class TailgateMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+
+    private SimpleLocation location;
+    private double latitude;
+    private double longitude;
+
+    DatabaseReference database;
+
+    private ArrayList<Tailgate> tailgateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +46,59 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        location = new SimpleLocation(this);
+        database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
+//        Query query = database.orderByChild("latitude");
+//        query.addValueEventListener(new ValueEventListener() {
+//           @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//               DataSnapshot firstTailgate = dataSnapshot.getChildren().iterator().next();
+////               Tailgate myTailgate = firstTailgate.getValue(Tailgate.class);
+////               System.out.println(myTailgate.tailgateName);
+////               tailgateList.add(myTailgate);
+//           }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//
+//        });
+        tailgateList = new ArrayList<Tailgate>();
+        database.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        collectTailgates((Map<String,Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+
+
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this);
+        }
+
+        populateMap();
+    }
+
+    private void collectTailgates(Map<String,Object> tailgates) {
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : tailgates.entrySet()){
+
+            //Get user map
+            HashMap tailgateMap = (HashMap) entry.getValue();
+            //Get phone field and append to list
+            Tailgate myTailgate = new Tailgate(tailgateMap);
+            tailgateList.add(myTailgate);
+        }
+        populateMap();
     }
 
     @Override
@@ -36,10 +114,45 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
+        getCurrentDeviceLocation();
+        LatLng myLocation = new LatLng(this.latitude, this.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 17.0f));
+    }
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    private void getCurrentDeviceLocation() {
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+    }
+
+    private void populateMap() {
+        for (Tailgate tailgate : tailgateList) {
+            LatLng pinLocation = new LatLng(tailgate.latitude, tailgate.longitude);
+            mMap.addMarker(new MarkerOptions()
+                .position(pinLocation).title(tailgate.startTime)).setTag(tailgate);
+            mMap.setOnMarkerClickListener(this);
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        Tailgate tail = (Tailgate) marker.getTag();
+        String tailgateName = tail.tailgateName;
+        Toast.makeText(TailgateMapActivity.this,
+                tailgateName,
+                Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        location.beginUpdates();
+    }
+
+    @Override
+    protected void onPause() {
+        location.endUpdates();
+        super.onPause();
     }
 }
