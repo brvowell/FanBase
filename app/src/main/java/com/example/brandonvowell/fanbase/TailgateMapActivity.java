@@ -2,7 +2,9 @@ package com.example.brandonvowell.fanbase;
 
 import android.os.Bundle;
 import android.provider.SyncStateContract;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +36,8 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
     private double latitude;
     private double longitude;
 
+    private BottomSheetBehavior mBottomSheetBehavior1;
+
     DatabaseReference database;
 
     private ArrayList<Tailgate> tailgateList;
@@ -47,23 +51,11 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        View bottomSheet = findViewById(R.map_bottom_sheet);
+        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
+
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
-//        Query query = database.orderByChild("latitude");
-//        query.addValueEventListener(new ValueEventListener() {
-//           @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//               DataSnapshot firstTailgate = dataSnapshot.getChildren().iterator().next();
-////               Tailgate myTailgate = firstTailgate.getValue(Tailgate.class);
-////               System.out.println(myTailgate.tailgateName);
-////               tailgateList.add(myTailgate);
-//           }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//
-//        });
         tailgateList = new ArrayList<Tailgate>();
         database.addListenerForSingleValueEvent(
                 new ValueEventListener() {
