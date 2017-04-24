@@ -51,8 +51,10 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        View bottomSheet = findViewById(R.map_bottom_sheet);
+        View bottomSheet = findViewById(R.id.map_preview);
         mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior1.setHideable(true);
+        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
@@ -128,11 +130,17 @@ public class TailgateMapActivity extends FragmentActivity implements OnMapReadyC
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        Tailgate tail = (Tailgate) marker.getTag();
-        String tailgateName = tail.tailgateName;
-        Toast.makeText(TailgateMapActivity.this,
-                tailgateName,
-                Toast.LENGTH_SHORT).show();
+        Tailgate clickedTailgate = (Tailgate) marker.getTag();
+        String tailgateName = clickedTailgate.tailgateName;
+//        Toast.makeText(TailgateMapActivity.this,
+//                tailgateName,
+//                Toast.LENGTH_SHORT).show();
+        if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        else {
+            mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
         return false;
     }
 
