@@ -143,9 +143,6 @@ GoogleMap.OnMapClickListener {
     public boolean onMarkerClick(final Marker marker) {
         Tailgate clickedTailgate = (Tailgate) marker.getTag();
         String tailgateName = clickedTailgate.tailgateName;
-//        Toast.makeText(TailgateMapActivity.this,
-//                tailgateName,
-//                Toast.LENGTH_SHORT).show();
         if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
