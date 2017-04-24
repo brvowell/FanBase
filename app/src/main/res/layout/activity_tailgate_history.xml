@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/themeSilver">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <Toolbar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_2"/>
+    </Toolbar>
+
+    <!--Begin all scrollable stuff-->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </ScrollView>
+
+    <Toolbar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:weightSum="1">
+
+        <TextView
+            android:text="@string/PrevTailgates"
+            android:layout_width="356dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/previousTailgateTag"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="20sp"/>
+
+
+    </Toolbar>
 
 </LinearLayout>

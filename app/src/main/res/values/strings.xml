@@ -20,4 +20,5 @@
     <string name="tailgate_creation_failed">Invalid input - all fields are required.</string>
     <string name="log_out">Log Out</string>
     <string name="remove_tailgates">Remove Previous Tailgates</string>
+    <string name="PrevTailgates">Previous Tailgates</string>
 </resources>

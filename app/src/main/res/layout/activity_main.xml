@@ -30,37 +30,52 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary">
 
-        <Button
-            android:text="@string/create_tailgate_btn_text"
-            android:layout_width="120dp"
+        <ImageButton
+            android:src="@drawable/plus_icon"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnCreate"
             android:height="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="45dp"
+            android:scaleType="fitCenter"
             android:background="?attr/colorPrimary"/>
 
-        <Button
-            android:text="@string/browse_tailgates_btn_text"
-            android:layout_width="120dp"
+        <ImageButton
+            android:src="@drawable/map_pin_icon"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnBrowse"
             android:height="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="45dp"
+            android:scaleType="fitCenter"
             android:background="?attr/colorPrimary"/>
 
-        <Button
-            android:text="@string/settings_btn_text"
-            android:layout_width="120dp"
+        <ImageButton
+            android:src="@drawable/settings_cog_icon"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSettings"
             android:height="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="45dp"
+            android:scaleType="fitCenter"
+            android:background="?attr/colorPrimary"/>
+
+        <ImageButton
+            android:src="@drawable/list_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnPrevTailgate"
+            android:height="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="30dp"
+            android:scaleType="fitCenter"
             android:background="?attr/colorPrimary"/>
 
     </Toolbar>

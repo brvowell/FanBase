@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupMenuScreenListeners() {
         mAuth = FirebaseAuth.getInstance();
 
-        final Button btnCreate = (Button) findViewById(R.id.btnCreate);
-        final Button btnBrowse = (Button) findViewById(R.id.btnBrowse);
-        final Button btnSettings = (Button) findViewById(R.id.btnSettings);
-        //final Button btnHistory = (Button) findViewById(R.id.btnHistory);
+        final ImageButton btnCreate = (ImageButton) findViewById(R.id.btnCreate);
+        final ImageButton btnBrowse = (ImageButton) findViewById(R.id.btnBrowse);
+        final ImageButton btnSettings = (ImageButton) findViewById(R.id.btnSettings);
+        final ImageButton btnPrevTailgate = (ImageButton) findViewById(R.id.btnPrevTailgate);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*btnHistory.setOnClickListener(new View.OnClickListener() {
+        btnPrevTailgate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 transitionHistoryActivity();
             }
-        });*/
+        });
     }
 }
