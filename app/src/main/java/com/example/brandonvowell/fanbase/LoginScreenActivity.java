@@ -50,6 +50,10 @@ public class LoginScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = emailTextField.getText().toString();
+                if (email.matches("")) {
+                    Toast.makeText(LoginScreenActivity.this, "You did not enter an email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String password = passwordTextField.getText().toString();
                 signIn(email, password);
             }

@@ -2,6 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/themeSilver">
+    android:background="@color/themeBlack">
+
+    <Toolbar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_2"/>
+    </Toolbar>
+
+    <Button
+        android:text="@string/log_out"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogOut"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp"
+        android:backgroundTint="@color/themeOrange"/>
+
 
 </LinearLayout>
