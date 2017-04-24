@@ -31,7 +31,7 @@
         android:background="?attr/colorPrimary">
 
         <ImageButton
-            android:src="@drawable/plus_icon"
+            android:src="@drawable/plus_icon_tranparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnCreate"
@@ -43,7 +43,7 @@
             android:background="?attr/colorPrimary"/>
 
         <ImageButton
-            android:src="@drawable/map_pin_icon"
+            android:src="@drawable/map_pin_icon_transparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnBrowse"
@@ -55,7 +55,7 @@
             android:background="?attr/colorPrimary"/>
 
         <ImageButton
-            android:src="@drawable/settings_cog_icon"
+            android:src="@drawable/settings_cog_icon_transparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnSettings"
@@ -67,7 +67,7 @@
             android:background="?attr/colorPrimary"/>
 
         <ImageButton
-            android:src="@drawable/list_icon"
+            android:src="@drawable/list_icon_transparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/btnPrevTailgate"
