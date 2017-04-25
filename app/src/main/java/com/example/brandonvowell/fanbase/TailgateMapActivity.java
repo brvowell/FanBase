@@ -6,6 +6,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -143,7 +144,18 @@ GoogleMap.OnMapClickListener {
     public boolean onMarkerClick(final Marker marker) {
         Tailgate clickedTailgate = (Tailgate) marker.getTag();
         String tailgateName = clickedTailgate.tailgateName;
+        String tailgateDesc = clickedTailgate.tailgateDescription;
+        String startTime = "Starts: " + clickedTailgate.startTime;
+        String endTime = "Ends: " + clickedTailgate.endTime;
         if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            TextView tname = (TextView) findViewById(R.id.tailgateName);
+            TextView tdesc = (TextView) findViewById(R.id.tailgateDescription);
+            TextView stime = (TextView) findViewById(R.id.startTime);
+            TextView etime = (TextView) findViewById(R.id.endTime);
+            tname.setText(tailgateName);
+            tdesc.setText(tailgateDesc);
+            stime.setText(startTime);
+            etime.setText(endTime);
             mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
         else {
