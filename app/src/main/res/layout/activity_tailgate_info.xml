@@ -98,6 +98,14 @@
         android:layout_marginTop="10dp"/>
 
     <Button
+        android:text="Upload Tailgate Photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnUploadPhotos"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
         android:text="Create Tailgate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
