@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,14 +21,28 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ImagePickerActivity;
+import com.esafirm.imagepicker.model.Image;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import im.delight.android.location.SimpleLocation;
 
 public class TailgateInfoActivity extends AppCompatActivity {
 
     private static final String TAG = "GPS Fetch Tag";
+    private static final int PHOTO_UPLOAD_LIMIT = 5;
+    private static final int REQUEST_CODE_PICKER = 1995;
+
     private EditText nameTextField;
     private EditText descriptionTextField;
     private EditText thingsToBringTextField;
@@ -39,9 +54,12 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private RadioButton awayRadioBtn;
     private Button btnSetLocation;
     private Button btnCreateTailgate;
+    private Button btnUploadPhotos;
 
     private SimpleLocation location;
     DatabaseReference database;
+    FirebaseStorage storage;
+
 
     private double latitude;
     private double longitude;
@@ -52,6 +70,8 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private String endTime;
     private int tailgateIsPublic;
     private int tailgateIsHome;
+    private ArrayList<Image> tailgateImages;
+    private String tailgateIdentifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +88,13 @@ public class TailgateInfoActivity extends AppCompatActivity {
         awayRadioBtn = (RadioButton) findViewById(R.id.awayRadBtn);
         btnSetLocation = (Button) findViewById(R.id.btnSetLocation);
         btnCreateTailgate = (Button) findViewById(R.id.btnCreateTailgate);
+        btnUploadPhotos = (Button) findViewById(R.id.btnUploadPhotos);
 
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
+        storage = FirebaseStorage.getInstance();
+
+        tailgateImages = new ArrayList<>();
 
         if (!location.hasLocationEnabled()) {
             // ask the user to enable location access
@@ -88,6 +112,13 @@ public class TailgateInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createTailgatePressed();
+            }
+        });
+
+        btnUploadPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadPhotosPressed();
             }
         });
 
@@ -116,6 +147,7 @@ public class TailgateInfoActivity extends AppCompatActivity {
     }
 
     private void getCurrentDeviceLocation() {
+        //TODO: show and hide loading spinner before and after
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
     }
@@ -123,16 +155,56 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private void createTailgatePressed() {
         if (verifyUserInput()) {
             //Create tailgate object and push to firebase
+            //TODO: show and hide loading spinner here
             Tailgate newTailgate = new Tailgate(latitude, longitude, tailgateName, tailgateDescription,
                     tailgateThingsToBring, startTime, endTime, tailgateIsPublic, tailgateIsHome);
             DatabaseReference newRef = database.push();
+            //TODO: push saved images to firebase
             newRef.setValue(newTailgate);
-
-
+            tailgateIdentifier = newRef.getKey();
+            if (!tailgateImages.isEmpty()) {
+                uploadImages();
+            }
+            //IDEA: use completion callback for pushing tailgate object. Use that tailgate ID to upload the images
         }
         else {
             Toast.makeText(TailgateInfoActivity.this, R.string.tailgate_creation_failed,
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadPhotosPressed() {
+        ImagePicker.create(this).returnAfterFirst(false).limit(PHOTO_UPLOAD_LIMIT).start(REQUEST_CODE_PICKER);
+    }
+
+    private void uploadImages() {
+        UploadTask uploadTask;
+        for (Image image : tailgateImages) {
+            String filepath = image.getPath();
+            Uri file = Uri.fromFile(new File(filepath));
+            StorageReference riversRef = storage.getReference().child(tailgateIdentifier+"/"+file.getLastPathSegment());
+            uploadTask = riversRef.putFile(file);
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            tailgateImages = (ArrayList<Image>) ImagePicker.getImages(data);
         }
     }
 
