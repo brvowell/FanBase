@@ -46,5 +46,6 @@ public class Tailgate implements Serializable {
         this.endTime = (String) map.get("endTime");
         this.tailgateIsPublic = (long) map.get("tailgateIsPublic");
         this.tailgateIsHome = (long) map.get("tailgateIsHome");
+        this.imageURLS = (String) map.get("imageURLS");
     }
 }

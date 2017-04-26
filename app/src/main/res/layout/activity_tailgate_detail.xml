@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -68,8 +69,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/gallery_linear_layout" />
+            android:orientation="horizontal"
+            android:id="@+id/gallery_linear_layout"
+            tools:background="@color/themeOrange"
+            android:background="@color/themeOrange" />
     </HorizontalScrollView>
 
 </LinearLayout>
