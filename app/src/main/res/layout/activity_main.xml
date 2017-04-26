@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <Toolbar
         android:layout_width="fill_parent"
@@ -17,67 +20,79 @@
             android:src="@drawable/ic_launcher_2"/>
     </Toolbar>
 
-    <!--Begin all scrollable stuff-->
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainScroll">
 
-    <Toolbar
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ImageButton
-            android:src="@drawable/plus_icon_tranparent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/btnCreate"
-            android:height="20dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="45dp"
-            android:scaleType="fitCenter"
-            android:background="?attr/colorPrimary"/>
+            </LinearLayout>
 
-        <ImageButton
-            android:src="@drawable/map_pin_icon_transparent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/btnBrowse"
-            android:height="20dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="45dp"
-            android:scaleType="fitCenter"
-            android:background="?attr/colorPrimary"/>
+        </ScrollView>
 
-        <ImageButton
-            android:src="@drawable/settings_cog_icon_transparent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/btnSettings"
-            android:height="20dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="45dp"
-            android:scaleType="fitCenter"
-            android:background="?attr/colorPrimary"/>
+        <Toolbar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/colorPrimary">
 
-        <ImageButton
-            android:src="@drawable/list_icon_transparent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/btnPrevTailgate"
-            android:height="20dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="30dp"
-            android:scaleType="fitCenter"
-            android:background="?attr/colorPrimary"/>
+            <ImageButton
+                android:src="@drawable/plus_icon_tranparent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnCreate"
+                android:height="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="45dp"
+                android:scaleType="fitCenter"
+                android:background="?attr/colorPrimary"/>
 
-    </Toolbar>
+            <ImageButton
+                android:src="@drawable/map_pin_icon_transparent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnBrowse"
+                android:height="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="45dp"
+                android:scaleType="fitCenter"
+                android:background="?attr/colorPrimary"/>
+
+            <ImageButton
+                android:src="@drawable/settings_cog_icon_transparent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnSettings"
+                android:height="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="45dp"
+                android:scaleType="fitCenter"
+                android:background="?attr/colorPrimary"/>
+
+            <ImageButton
+                android:src="@drawable/list_icon_transparent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnPrevTailgate"
+                android:height="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="30dp"
+                android:scaleType="fitCenter"
+                android:background="?attr/colorPrimary"/>
+
+        </Toolbar>
+
+    </RelativeLayout>
 
 </LinearLayout>
