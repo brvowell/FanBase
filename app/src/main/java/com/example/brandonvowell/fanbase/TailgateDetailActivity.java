@@ -1,9 +1,14 @@
 package com.example.brandonvowell.fanbase;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +32,7 @@ public class TailgateDetailActivity extends FragmentActivity {
     FirebaseStorage storage;
 
     public LinearLayout layout;
+    ImageView coverPhotoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class TailgateDetailActivity extends FragmentActivity {
         TextView tailgateName = (TextView) findViewById(R.id.tailgate_name_textview);
         TextView tailgateDescription = (TextView) findViewById(R.id.description_textview);
         TextView thingsToBring = (TextView) findViewById(R.id.thingsToBring_textView);
+        coverPhotoView = (ImageView) findViewById(R.id.cover_image_view);
+
         layout = (LinearLayout) findViewById(R.id.gallery_linear_layout);
 
         currentTailgate = (Tailgate) getIntent().getSerializableExtra("TAILGATE");
@@ -48,7 +56,11 @@ public class TailgateDetailActivity extends FragmentActivity {
         thingsToBring.setText(things);
 
         //GET IMAGES
+        //TODO Only load images if urlsList is not empty here
         List<String> urlsList = Arrays.asList(currentTailgate.imageURLS.split(","));
+        if (!urlsList.isEmpty()) {
+            loadCoverPhoto(urlsList.get(0));
+        }
         for (String url : urlsList) {
 //            ImageView view = new ImageView(this);
 //            StorageReference storageReference = storage.getReference().child(url);
@@ -75,12 +87,50 @@ public class TailgateDetailActivity extends FragmentActivity {
 
     }
 
+    private void loadCoverPhoto(String coverURL) {
+        coverPhotoView.setScaleType(ImageView.ScaleType.FIT_XY);
+        coverPhotoView.setAdjustViewBounds(true);
+        Picasso.with(getApplicationContext()).load(coverURL).into(coverPhotoView);
+    }
+
     private void downloadImage(String downloadURL) {
         ImageView view = new ImageView(this);
         Picasso.with(getApplicationContext()).load(downloadURL).into(view);
         view.setAdjustViewBounds(true);
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         view.setPadding(20, 20, 20, 20);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPhoto((ImageView) v, 200, 200);
+            }
+        });
         layout.addView(view);
+    }
+
+    private void loadPhoto(ImageView imageView, int width, int height) {
+
+        ImageView tempImageView = imageView;
+
+
+        AlertDialog.Builder imageDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View layout = inflater.inflate(R.layout.custom_fullimage_dialog,
+                (ViewGroup) findViewById(R.id.layout_root));
+        ImageView image = (ImageView) layout.findViewById(R.id.fullimage);
+        image.setImageDrawable(tempImageView.getDrawable());
+        imageDialog.setView(layout);
+        imageDialog.setPositiveButton("Close", new DialogInterface.OnClickListener(){
+
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+
+
+        imageDialog.create();
+        imageDialog.show();
     }
 }
