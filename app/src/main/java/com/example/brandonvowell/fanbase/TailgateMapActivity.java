@@ -1,10 +1,14 @@
 package com.example.brandonvowell.fanbase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.NestedScrollView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -46,6 +50,8 @@ GoogleMap.OnMapClickListener {
 
     private ArrayList<Tailgate> tailgateList;
 
+    Tailgate currentTailgate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,8 @@ GoogleMap.OnMapClickListener {
         mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
         mBottomSheetBehavior1.setHideable(true);
         mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        final Button bottomSheetButton = (Button) findViewById(R.id.bottomSheetButton);
 
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
@@ -83,17 +91,28 @@ GoogleMap.OnMapClickListener {
             SimpleLocation.openSettings(this);
         }
 
+        bottomSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(TailgateMapActivity.this, "We made it fam",
+//                        Toast.LENGTH_SHORT).show();
+                Intent nextScreen = new Intent(v.getContext(), TailgateDetailActivity.class);
+                nextScreen.putExtra("TAILGATE", currentTailgate);
+                startActivityForResult(nextScreen, 0);
+            }
+        });
+
         populateMap();
     }
 
     private void collectTailgates(Map<String,Object> tailgates) {
         //iterate through each user, ignoring their UID
         for (Map.Entry<String, Object> entry : tailgates.entrySet()){
-
             //Get user map
             HashMap tailgateMap = (HashMap) entry.getValue();
             //Get phone field and append to list
             Tailgate myTailgate = new Tailgate(tailgateMap);
+            myTailgate.tailgateIdentifier = entry.getKey();
             tailgateList.add(myTailgate);
         }
         populateMap();
@@ -142,11 +161,11 @@ GoogleMap.OnMapClickListener {
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        Tailgate clickedTailgate = (Tailgate) marker.getTag();
-        String tailgateName = clickedTailgate.tailgateName;
-        String tailgateDesc = clickedTailgate.tailgateDescription;
-        String startTime = "Starts: " + clickedTailgate.startTime;
-        String endTime = "Ends: " + clickedTailgate.endTime;
+        currentTailgate = (Tailgate) marker.getTag();
+        String tailgateName = currentTailgate.tailgateName;
+        String tailgateDesc = currentTailgate.tailgateDescription;
+        String startTime = "Starts: " + currentTailgate.startTime;
+        String endTime = "Ends: " + currentTailgate.endTime;
         if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             TextView tname = (TextView) findViewById(R.id.tailgateName);
             TextView tdesc = (TextView) findViewById(R.id.tailgateDescription);
