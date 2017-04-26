@@ -62,6 +62,10 @@
             android:name="com.example.brandonvowell.fanbase.TailgateHistoryActivity"
             android:label="@string/app_name"
             />
+        <activity
+            android:name="com.example.brandonvowell.fanbase.TailgateDetailActivity"
+            android:label="FanBase"
+            />
     </application>
 
 </manifest>

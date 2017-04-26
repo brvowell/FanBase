@@ -34,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import im.delight.android.location.SimpleLocation;
 
@@ -72,6 +73,7 @@ public class TailgateInfoActivity extends AppCompatActivity {
     private int tailgateIsHome;
     private ArrayList<Image> tailgateImages;
     private String tailgateIdentifier;
+    private String imageURLS =  "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +160,7 @@ public class TailgateInfoActivity extends AppCompatActivity {
             //TODO: show and hide loading spinner here
             Tailgate newTailgate = new Tailgate(latitude, longitude, tailgateName, tailgateDescription,
                     tailgateThingsToBring, startTime, endTime, tailgateIsPublic, tailgateIsHome);
+            newTailgate.imageURLS = this.imageURLS;
             DatabaseReference newRef = database.push();
             //TODO: push saved images to firebase
             newRef.setValue(newTailgate);
@@ -165,6 +168,9 @@ public class TailgateInfoActivity extends AppCompatActivity {
             if (!tailgateImages.isEmpty()) {
                 uploadImages();
             }
+            HashMap<String, Object> updateHashMap = new HashMap<>();
+            updateHashMap.put("imageURLS", this.imageURLS);
+            database.child(tailgateIdentifier).updateChildren(updateHashMap);
             //IDEA: use completion callback for pushing tailgate object. Use that tailgate ID to upload the images
         }
         else {
@@ -182,7 +188,9 @@ public class TailgateInfoActivity extends AppCompatActivity {
         for (Image image : tailgateImages) {
             String filepath = image.getPath();
             Uri file = Uri.fromFile(new File(filepath));
-            StorageReference riversRef = storage.getReference().child(tailgateIdentifier+"/"+file.getLastPathSegment());
+            String filepathString = tailgateIdentifier+"/"+file.getLastPathSegment();
+            StorageReference riversRef = storage.getReference().child(filepathString);
+            this.imageURLS += filepathString + ",";
             uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails

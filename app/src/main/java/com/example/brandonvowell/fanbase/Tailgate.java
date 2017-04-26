@@ -1,10 +1,15 @@
 package com.example.brandonvowell.fanbase;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.lang.Math;
 
-public class Tailgate {
+public class Tailgate implements Serializable {
     public double latitude;
     public double longitude;
     public String tailgateName;
@@ -14,8 +19,10 @@ public class Tailgate {
     public String endTime;
     public long tailgateIsPublic;
     public long tailgateIsHome;
+    public String tailgateIdentifier;
+    public String imageURLS;
 
-    public Tailgate(double latitude, double longitude, String name, String description, String thingsToBring,
+    public Tailgate (double latitude, double longitude, String name, String description, String thingsToBring,
                     String startTime, String endTime, int isPublic, int isHome) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -26,6 +33,7 @@ public class Tailgate {
         this.endTime = endTime;
         this.tailgateIsPublic = isPublic;
         this.tailgateIsHome = isHome;
+
     }
 
     public Tailgate(HashMap<String, Object> map) {
