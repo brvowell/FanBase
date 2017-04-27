@@ -47,4 +47,13 @@ public class Tailgate implements Serializable {
         this.tailgateIsPublic = (long) map.get("tailgateIsPublic");
         this.tailgateIsHome = (long) map.get("tailgateIsHome");
     }
+
+    public String getTailgateName() {
+        return this.tailgateName;
+    }
+    public String getStartTime() { return this.startTime; }
+    public double getLatitude() { return this.latitude; }
+    public double getLongitude() { return this.longitude; }
+    public long getTailgateIsHome() { return this.tailgateIsHome; }
+    public void setTailgateIdentifier(String s) { this.tailgateIdentifier = s; }
 }

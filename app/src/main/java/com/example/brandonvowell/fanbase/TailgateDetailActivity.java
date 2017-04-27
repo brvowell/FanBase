@@ -30,7 +30,7 @@ public class TailgateDetailActivity extends FragmentActivity {
         TextView thingsToBring = (TextView) findViewById(R.id.thingsToBring_textView);
         LinearLayout layout = (LinearLayout) findViewById(R.id.gallery_linear_layout);
 
-        currentTailgate = (Tailgate) getIntent().getSerializableExtra("TAILGATE");
+        currentTailgate = (Tailgate) getIntent().getSerializableExtra("TAILGATE_OBJECT");
         storage = FirebaseStorage.getInstance();
 
         String name = currentTailgate.tailgateName;
