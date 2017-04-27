@@ -35,6 +35,29 @@
                 android:id="@+id/scrollLinear"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:textAlignment="center"
+                    android:text="Welcome to Fanbase."
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@color/themeOrange"
+                    android:textStyle="normal|bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:textAlignment="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Use the buttons below to create, browse, view previous tailgates, or access settings."
+                    android:textSize="20dp"
+                    android:textColor="@color/themeOrange"/>
+
             </LinearLayout>
 
         </ScrollView>

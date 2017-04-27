@@ -113,40 +113,24 @@ public class TailgateDetailActivity extends FragmentActivity implements OnMapRea
 
         //GET IMAGES
         //TODO Only load images if urlsList is not empty here
-        List<String> urlsList = Arrays.asList(currentTailgate.imageURLS.split(","));
-        if (!urlsList.isEmpty()) {
-            loadCoverPhoto(urlsList.get(0));
+        if (currentTailgate.imageURLS != null) {
+            List<String> urlsList = Arrays.asList(currentTailgate.imageURLS.split(","));
+
+            for (String url : urlsList) {
+                //ATTEMPT 2
+                storage.getReference().child(url).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadImage(uri.toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //handle errors here
+                    }
+                });
+            }
         }
-        for (String url : urlsList) {
-//            ImageView view = new ImageView(this);
-//            StorageReference storageReference = storage.getReference().child(url);
-//            Glide.with(this /* context */)
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .into(view);
-//            layout.addView(view);
-
-            //ATTEMPT 2
-            storage.getReference().child(url).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    downloadImage(uri.toString());
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    //handle errors here
-                }
-            });
-        }
-        System.out.println("hi");
-
-    }
-
-    private void loadCoverPhoto(String coverURL) {
-        coverPhotoView.setScaleType(ImageView.ScaleType.FIT_XY);
-        coverPhotoView.setAdjustViewBounds(true);
-        Picasso.with(getApplicationContext()).load(coverURL).into(coverPhotoView);
     }
 
     private void downloadImage(String downloadURL) {
