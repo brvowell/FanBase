@@ -137,9 +137,6 @@ public class MainActivity extends AppCompatActivity {
             myTailgate.setTailgateIdentifier(entry.getKey());
             tL.add(myTailgate);
         }
-        for(Tailgate t : tL) {
-            System.out.println("TAILGATE: " + t.getTailgateName());
-        }
         //setCards(tL);
         tailgateList = tL;
         allTailgatesLoaded = true;
@@ -208,7 +205,9 @@ public class MainActivity extends AppCompatActivity {
         btnPrevTailgate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionHistoryActivity();
+                Intent nextScreen = new Intent(v.getContext(), TailgateHistoryActivity.class);
+                nextScreen.putExtra("TAILGATE_LIST", tailgateList);
+                startActivityForResult(nextScreen, 0);
             }
         });
     }
