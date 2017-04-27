@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.TextView;
+import java.util.concurrent.TimeUnit;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,8 +71,8 @@ GoogleMap.OnMapClickListener {
 
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
-        tailgateList = new ArrayList<Tailgate>();
-        database.addListenerForSingleValueEvent(
+        tailgateList = (ArrayList<Tailgate>) getIntent().getSerializableExtra("TAILGATE_LIST");
+        /*database.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -83,7 +84,7 @@ GoogleMap.OnMapClickListener {
                     public void onCancelled(DatabaseError databaseError) {
                         //handle databaseError
                     }
-                });
+                });*/
 
 
         if (!location.hasLocationEnabled()) {
@@ -97,15 +98,13 @@ GoogleMap.OnMapClickListener {
 //                Toast.makeText(TailgateMapActivity.this, "We made it fam",
 //                        Toast.LENGTH_SHORT).show();
                 Intent nextScreen = new Intent(v.getContext(), TailgateDetailActivity.class);
-                nextScreen.putExtra("TAILGATE", currentTailgate);
+                nextScreen.putExtra("TAILGATE_OBJECT", currentTailgate);
                 startActivityForResult(nextScreen, 0);
             }
         });
-
-        populateMap();
     }
 
-    private void collectTailgates(Map<String,Object> tailgates) {
+    /*private void collectTailgates(Map<String,Object> tailgates) {
         //iterate through each user, ignoring their UID
         for (Map.Entry<String, Object> entry : tailgates.entrySet()){
             //Get user map
@@ -116,7 +115,7 @@ GoogleMap.OnMapClickListener {
             tailgateList.add(myTailgate);
         }
         populateMap();
-    }
+    }*/
 
     @Override
     public void onStart() {
@@ -131,11 +130,12 @@ GoogleMap.OnMapClickListener {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMapClickListener(this);
         mMap.setMyLocationEnabled(true);
         getCurrentDeviceLocation();
         LatLng myLocation = new LatLng(this.latitude, this.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 17.0f));
-        mMap.setOnMapClickListener(this);
+        populateMap();
 
     }
 
@@ -146,15 +146,20 @@ GoogleMap.OnMapClickListener {
 
     private void populateMap() {
         for (Tailgate tailgate : tailgateList) {
-            LatLng pinLocation = new LatLng(tailgate.latitude, tailgate.longitude);
+            LatLng pinLocation = new LatLng(tailgate.getLatitude(), tailgate.getLongitude());
             BitmapDescriptor pinColor;
-            if (tailgate.tailgateIsHome == 1) {
+            if (tailgate.getTailgateIsHome() == 1) {
                 pinColor = BitmapDescriptorFactory.defaultMarker(12.00f);
             } else {
                 pinColor = BitmapDescriptorFactory.defaultMarker(231.00f);
             }
-            mMap.addMarker(new MarkerOptions()
-                .position(pinLocation).title(tailgate.startTime).icon(pinColor)).setTag(tailgate);
+            if(mMap != null) {
+                mMap.addMarker(new MarkerOptions()
+                        .position(pinLocation).title(tailgate.getStartTime()).icon(pinColor)).setTag(tailgate);
+            }
+            else {
+                System.out.println("MAP IS NULL");
+            }
             mMap.setOnMarkerClickListener(this);
         }
     }

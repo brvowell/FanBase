@@ -68,7 +68,7 @@ public class TailgateDetailActivity extends FragmentActivity implements OnMapRea
 
         layout = (LinearLayout) findViewById(R.id.gallery_linear_layout);
 
-        currentTailgate = (Tailgate) getIntent().getSerializableExtra("TAILGATE");
+        currentTailgate = (Tailgate) getIntent().getSerializableExtra("TAILGATE_OBJECT");
         storage = FirebaseStorage.getInstance();
 
         location = new SimpleLocation(this);
