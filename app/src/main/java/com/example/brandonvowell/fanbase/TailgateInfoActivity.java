@@ -152,6 +152,8 @@ public class TailgateInfoActivity extends AppCompatActivity {
         //TODO: show and hide loading spinner before and after
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
+        Toast.makeText(TailgateInfoActivity.this, "Location has been updated.",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void createTailgatePressed() {
@@ -165,12 +167,16 @@ public class TailgateInfoActivity extends AppCompatActivity {
             //TODO: push saved images to firebase
             newRef.setValue(newTailgate);
             tailgateIdentifier = newRef.getKey();
+            newTailgate.tailgateIdentifier = tailgateIdentifier;
             if (!tailgateImages.isEmpty()) {
-                uploadImages();
+                uploadImages(newTailgate);
+            } else {
+                newTailgate.imageURLS = null;
             }
             HashMap<String, Object> updateHashMap = new HashMap<>();
             updateHashMap.put("imageURLS", this.imageURLS);
             database.child(tailgateIdentifier).updateChildren(updateHashMap);
+            transitionTailgateDetailScreen(newTailgate);
             //IDEA: use completion callback for pushing tailgate object. Use that tailgate ID to upload the images
         }
         else {
@@ -183,7 +189,7 @@ public class TailgateInfoActivity extends AppCompatActivity {
         ImagePicker.create(this).returnAfterFirst(false).limit(PHOTO_UPLOAD_LIMIT).start(REQUEST_CODE_PICKER);
     }
 
-    private void uploadImages() {
+    private void uploadImages(Tailgate currentTailgate) {
         UploadTask uploadTask;
         for (Image image : tailgateImages) {
             String filepath = image.getPath();
@@ -207,6 +213,13 @@ public class TailgateInfoActivity extends AppCompatActivity {
                 }
             });
         }
+        //transitionTailgateDetailScreen(currentTailgate);
+    }
+
+    private void transitionTailgateDetailScreen(Tailgate currentTailgate) {
+        Intent nextScreen = new Intent(this, TailgateDetailActivity.class);
+        nextScreen.putExtra("TAILGATE_OBJECT", currentTailgate);
+        startActivityForResult(nextScreen, 0);
     }
 
     @Override

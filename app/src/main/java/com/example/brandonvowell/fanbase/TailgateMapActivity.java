@@ -72,20 +72,6 @@ GoogleMap.OnMapClickListener {
         location = new SimpleLocation(this);
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
         tailgateList = (ArrayList<Tailgate>) getIntent().getSerializableExtra("TAILGATE_LIST");
-        /*database.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        collectTailgates((Map<String,Object>) dataSnapshot.getValue());
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });*/
-
 
         if (!location.hasLocationEnabled()) {
             // ask the user to enable location access
@@ -95,27 +81,12 @@ GoogleMap.OnMapClickListener {
         bottomSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(TailgateMapActivity.this, "We made it fam",
-//                        Toast.LENGTH_SHORT).show();
                 Intent nextScreen = new Intent(v.getContext(), TailgateDetailActivity.class);
                 nextScreen.putExtra("TAILGATE_OBJECT", currentTailgate);
                 startActivityForResult(nextScreen, 0);
             }
         });
     }
-
-    /*private void collectTailgates(Map<String,Object> tailgates) {
-        //iterate through each user, ignoring their UID
-        for (Map.Entry<String, Object> entry : tailgates.entrySet()){
-            //Get user map
-            HashMap tailgateMap = (HashMap) entry.getValue();
-            //Get phone field and append to list
-            Tailgate myTailgate = new Tailgate(tailgateMap);
-            myTailgate.tailgateIdentifier = entry.getKey();
-            tailgateList.add(myTailgate);
-        }
-        populateMap();
-    }*/
 
     @Override
     public void onStart() {
