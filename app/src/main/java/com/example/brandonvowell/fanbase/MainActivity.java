@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference database;
     private ArrayList<Tailgate> tailgateList;
     private Context mContext;
+    private boolean allTailgatesLoaded = false;
+    private String deepLinkIdentifier = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 });
         //setCards(tailgateList);
 
-        onNewIntent(getIntent());
+        this.onNewIntent(getIntent());
     }
 
+    @Override
     protected void onNewIntent(Intent intent) {
         String action = intent.getAction();
         String data = intent.getDataString();
@@ -83,7 +86,20 @@ public class MainActivity extends AppCompatActivity {
             String tailgateIdentifier = data.substring(data.lastIndexOf("/") + 1);
             //Here we need to download tailgate based on identifier then transition to tailgate detail activity
             System.out.println(tailgateIdentifier);
+            deepLinkDetailTransition(tailgateIdentifier);
         }
+    }
+
+    private void deepLinkDetailTransition(String identifier) {
+        for (Tailgate tailgate : tailgateList) {
+            if (tailgate.tailgateIdentifier == identifier) {
+                Intent nextScreen = new Intent(this, TailgateDetailActivity.class);
+                nextScreen.putExtra("TAILGATE_OBJECT", tailgate);
+                startActivityForResult(nextScreen, 0);
+            }
+        }
+        //If made it here, there is no tailgate with that identifier
+        Toast.makeText(MainActivity.this, "The link you clicked was invalid.", Toast.LENGTH_SHORT).show();
     }
 
     private void transitionLoginScreenActivity() {
@@ -126,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setCards(tL);
         tailgateList = tL;
+        allTailgatesLoaded = true;
     }
 
     private void setCards(ArrayList<Tailgate> tList) {

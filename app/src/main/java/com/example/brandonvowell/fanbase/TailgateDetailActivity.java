@@ -1,6 +1,11 @@
 package com.example.brandonvowell.fanbase;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,6 +70,9 @@ public class TailgateDetailActivity extends FragmentActivity implements OnMapRea
         TextView tailgateName = (TextView) findViewById(R.id.tailgate_name_textview);
         TextView tailgateDescription = (TextView) findViewById(R.id.description_textview);
         TextView thingsToBring = (TextView) findViewById(R.id.thingsToBring_textView);
+        Button shareButton = (Button) findViewById(R.id.share_tailgate_button);
+        Button chatButton = (Button) findViewById(R.id.open_chat_button);
+
         coverPhotoView = (ImageView) findViewById(R.id.cover_image_view);
 
         layout = (LinearLayout) findViewById(R.id.gallery_linear_layout);
@@ -79,6 +88,28 @@ public class TailgateDetailActivity extends FragmentActivity implements OnMapRea
         tailgateName.setText(name);
         tailgateDescription.setText(description);
         thingsToBring.setText(things);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deepLink = "http://fanbase.com/tailgate/" + currentTailgate.tailgateIdentifier;
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(deepLink, deepLink);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(TailgateDetailActivity.this, "Tailgate share link copied to clipboard!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                PackageManager managerclock = getPackageManager();
+                i = managerclock.getLaunchIntentForPackage("com.groupme.android");
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
+            }
+        });
 
         //GET IMAGES
         //TODO Only load images if urlsList is not empty here
