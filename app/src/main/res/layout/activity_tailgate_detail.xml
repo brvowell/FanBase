@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/detail_map"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        tools:context="com.example.brandonvowell.fanbase.TailgateDetailActivity"
+        map:cameraZoom="17"
+        map:mapType="normal"
+        map:liteMode="true"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="55dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/cast_album_art_placeholder"
             android:id="@+id/cover_image_view"
+            android:background="@color/themeOrange"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
@@ -26,17 +39,39 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/tailgate_name_textview"
+            android:background="@color/themeOrange"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="normal|bold"
+            android:fontFamily="monospace" />
     </RelativeLayout>
 
-    <TextView
-        android:text="Description"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:id="@+id/description_textview"
-        android:textSize="18sp"
-        android:layout_height="120dp" />
+        android:layout_height="100dp">
+
+        <TextView
+            android:text="Description:"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView20"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.05"
+            android:textStyle="normal|bold"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:text="Description"
+            android:layout_width="wrap_content"
+            android:id="@+id/description_textview"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif" />
+\\
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -49,7 +84,9 @@
             android:id="@+id/textView10"
             android:textSize="18sp"
             android:layout_width="wrap_content"
-            android:layout_weight="0.05" />
+            android:layout_weight="0.05"
+            android:textStyle="normal|bold"
+            android:fontFamily="sans-serif" />
 
         <TextView
             android:text="Stuff"
@@ -57,7 +94,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/thingsToBring_textView"
             android:layout_weight="1"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:fontFamily="sans-serif" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:id="@+id/share_tailgate_button"
+            android:text="Share Tailgate"
+            android:layout_weight="2"/>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:id="@+id/open_chat_button"
+            android:layout_weight="2"
+            android:text="Open Chat"/>
     </LinearLayout>
 
     <HorizontalScrollView
@@ -68,8 +125,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/gallery_linear_layout" />
+            android:orientation="horizontal"
+            android:id="@+id/gallery_linear_layout"
+            tools:background="@color/themeOrange"
+            android:background="@color/themeOrange" />
     </HorizontalScrollView>
 
 </LinearLayout>

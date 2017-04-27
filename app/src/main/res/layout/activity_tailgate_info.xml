@@ -5,6 +5,14 @@
     android:weightSum="1"
     android:background="@color/themeBlack">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Create New Tailgate"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="24sp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
