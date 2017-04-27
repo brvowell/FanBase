@@ -137,41 +137,38 @@ public class MainActivity extends AppCompatActivity {
             myTailgate.setTailgateIdentifier(entry.getKey());
             tL.add(myTailgate);
         }
-        for(Tailgate t : tL) {
-            System.out.println("TAILGATE: " + t.getTailgateName());
-        }
-        setCards(tL);
+        //setCards(tL);
         tailgateList = tL;
         allTailgatesLoaded = true;
     }
 
-    private void setCards(ArrayList<Tailgate> tList) {
-        LinearLayout mScrollLinear = (LinearLayout) findViewById(R.id.scrollLinear);
-        int count = 0;
-        for(Tailgate t : tList) {
-            CardView card = new CardView(mContext);
-            LayoutParams params = new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-            );
-            card.setLayoutParams(params);
-            card.setRadius(5);
-            card.setContentPadding(15, 15, 15, 15);
-            card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-            card.setCardElevation(3);
-            card.setUseCompatPadding(true);
-            TextView tViewOne = new TextView(mContext);
-            tViewOne.setLayoutParams(params);
-            String value = t.getTailgateName();
-            tViewOne.setText(value);
-            tViewOne.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tViewOne.setTextColor(Color.BLACK);
-            card.addView(tViewOne);
-            mScrollLinear.addView(card);
-            count++;
-        }
-        System.out.println("COUNT: " + count);
-    }
+//    private void setCards(ArrayList<Tailgate> tList) {
+//        LinearLayout mScrollLinear = (LinearLayout) findViewById(R.id.scrollLinear);
+//        int count = 0;
+//        for(Tailgate t : tList) {
+//            CardView card = new CardView(mContext);
+//            LayoutParams params = new LayoutParams(
+//                    LayoutParams.MATCH_PARENT,
+//                    LayoutParams.MATCH_PARENT
+//            );
+//            card.setLayoutParams(params);
+//            card.setRadius(5);
+//            card.setContentPadding(15, 15, 15, 15);
+//            card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+//            card.setCardElevation(3);
+//            card.setUseCompatPadding(true);
+//            TextView tViewOne = new TextView(mContext);
+//            tViewOne.setLayoutParams(params);
+//            String value = t.getTailgateName();
+//            tViewOne.setText(value);
+//            tViewOne.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+//            tViewOne.setTextColor(Color.BLACK);
+//            card.addView(tViewOne);
+//            mScrollLinear.addView(card);
+//            count++;
+//        }
+//        System.out.println("COUNT: " + count);
+//    }
 
     private void setupMenuScreenListeners() {
         mAuth = FirebaseAuth.getInstance();
@@ -208,7 +205,9 @@ public class MainActivity extends AppCompatActivity {
         btnPrevTailgate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionHistoryActivity();
+                Intent nextScreen = new Intent(v.getContext(), TailgateHistoryActivity.class);
+                nextScreen.putExtra("TAILGATE_LIST", tailgateList);
+                startActivityForResult(nextScreen, 0);
             }
         });
     }
