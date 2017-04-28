@@ -57,6 +57,12 @@
                     android:text="Use the buttons below to create, browse, view previous tailgates, or access settings."
                     android:textSize="20dp"
                     android:textColor="@color/themeOrange"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:id="@+id/refresh_button"
+                    android:text="Refresh"
+                    android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
 

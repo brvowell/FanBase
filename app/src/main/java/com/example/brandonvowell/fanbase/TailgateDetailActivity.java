@@ -20,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,10 +31,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -179,9 +175,9 @@ public class TailgateDetailActivity extends FragmentActivity implements OnMapRea
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         getCurrentDeviceLocation();
-        LatLng myLocation = new LatLng(this.latitude, this.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 17.0f));
+        //LatLng myLocation = new LatLng(this.latitude, this.longitude);
         LatLng pinLocation = new LatLng(currentTailgate.latitude, currentTailgate.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinLocation, 17.0f));
         BitmapDescriptor pinColor;
         if (currentTailgate.tailgateIsHome == 1) {
             pinColor = BitmapDescriptorFactory.defaultMarker(12.00f);

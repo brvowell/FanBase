@@ -1,25 +1,13 @@
 package com.example.brandonvowell.fanbase;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference database;
     private ArrayList<Tailgate> tailgateList;
     private Context mContext;
-    private boolean allTailgatesLoaded = false;
-    private String deepLinkIdentifier = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +46,26 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference().child("Tailgates");
         tailgateList = new ArrayList<Tailgate>();
 
+        Button refreshButton = (Button) findViewById(R.id.refresh_button);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                //Get map of users in datasnapshot
+                                collectTailgates((Map<String,Object>) dataSnapshot.getValue());
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                //handle databaseError
+                            }
+                        });
+            }
+        });
+
         database.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -73,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         //handle databaseError
                     }
                 });
-        //setCards(tailgateList);
-
         this.onNewIntent(getIntent());
     }
 
@@ -137,38 +141,8 @@ public class MainActivity extends AppCompatActivity {
             myTailgate.setTailgateIdentifier(entry.getKey());
             tL.add(myTailgate);
         }
-        //setCards(tL);
         tailgateList = tL;
-        allTailgatesLoaded = true;
     }
-
-//    private void setCards(ArrayList<Tailgate> tList) {
-//        LinearLayout mScrollLinear = (LinearLayout) findViewById(R.id.scrollLinear);
-//        int count = 0;
-//        for(Tailgate t : tList) {
-//            CardView card = new CardView(mContext);
-//            LayoutParams params = new LayoutParams(
-//                    LayoutParams.MATCH_PARENT,
-//                    LayoutParams.MATCH_PARENT
-//            );
-//            card.setLayoutParams(params);
-//            card.setRadius(5);
-//            card.setContentPadding(15, 15, 15, 15);
-//            card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-//            card.setCardElevation(3);
-//            card.setUseCompatPadding(true);
-//            TextView tViewOne = new TextView(mContext);
-//            tViewOne.setLayoutParams(params);
-//            String value = t.getTailgateName();
-//            tViewOne.setText(value);
-//            tViewOne.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-//            tViewOne.setTextColor(Color.BLACK);
-//            card.addView(tViewOne);
-//            mScrollLinear.addView(card);
-//            count++;
-//        }
-//        System.out.println("COUNT: " + count);
-//    }
 
     private void setupMenuScreenListeners() {
         mAuth = FirebaseAuth.getInstance();

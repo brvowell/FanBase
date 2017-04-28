@@ -35,13 +35,13 @@
         <TextView
             android:text="Tailgate Name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/tailgate_name_textview"
             android:background="@color/themeOrange"
             android:textAlignment="center"
-            android:textSize="30sp"
+            android:textSize="22sp"
             android:gravity="center"
             android:textStyle="normal|bold"
             android:fontFamily="monospace" />

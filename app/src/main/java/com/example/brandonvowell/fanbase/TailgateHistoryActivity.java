@@ -1,17 +1,11 @@
 package com.example.brandonvowell.fanbase;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.content.Context;
-import android.widget.Button;
 import android.widget.TextView;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.graphics.Color;
